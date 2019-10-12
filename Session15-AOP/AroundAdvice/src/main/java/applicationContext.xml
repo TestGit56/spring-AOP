@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    https://www.springframework.org/schema/beans/spring-beans.xsd 
+    http://www.springframework.org/schema/util
+    https://www.springframework.org/schema/util/spring-util.xsd 
+    http://www.springframework.org/schema/context
+    https://www.springframework.org/schema/context/spring-context.xsd 
+     http://www.springframework.org/schema/aop
+    https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<bean id="sampleServiceId" class="com.datageeks.service.SampleService"></bean>
+<bean id="sampleAdviceId" class="com.datageeks.advice.SampleServiceAdvice"></bean>
+
+<aop:config>
+
+<aop:aspect  ref="sampleAdviceId">
+<aop:before method="checkOffer" pointcut="execution(boolean com.datageeks.service.SampleService.demo(String,Float))"/>
+</aop:aspect>
+
+<aop:aspect ref="sampleAdviceId">
+<aop:after-returning method="cashBack" pointcut="execution(Float com.datageeks.service.SampleService.order())" 
+returning="orderAmount"/>
+</aop:aspect>
+
+<aop:aspect ref="sampleAdviceId">
+<aop:around method="transactional" pointcut="execution(* com.datageeks.service.SampleService.transfer())"/>
+</aop:aspect>
+</aop:config>
+	
+</beans>
+    

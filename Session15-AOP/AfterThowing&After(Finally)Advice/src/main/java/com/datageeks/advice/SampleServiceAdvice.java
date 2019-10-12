@@ -1,0 +1,61 @@
+package com.datageeks.advice;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+public class SampleServiceAdvice {
+
+	// Before Advice Logic
+
+	public void checkOffer(JoinPoint joinpoint) {
+		System.out.println(" \n\n From SampleServiceAdvice :: BeforeAdvice Method checkOffer(...) Started  ");
+		System.out.println("PointCut Expression => " + joinpoint.getSignature());
+		System.out.println(" Type of selecting JoinPoint => " + joinpoint.getKind());
+		Object[] objArry = joinpoint.getArgs();
+		String cardType = (String) objArry[0];
+		System.out.println(" Crad Type => " + cardType);
+		if (cardType.equalsIgnoreCase("HDFC")) {
+			System.out.println("===> Congrats Offer eligibility Applied for 10% ");
+		} else {
+			System.out.println("!!! Sorry not eligible for cashback offer");
+		}
+		System.out.println(" From SampleServiceAdvice :: BeforeAdvice Method checkOffer(...) Ended ");
+
+	}
+
+	public void cashBack(JoinPoint joinPoint, Float orderAmount) {
+		System.out.println(" \n\n From SampleServiceAdvice :: AfterRetuning Method cashBack(...) Started  ");
+		System.out.println("Congrats !!!" + (orderAmount / 10) + " Cashback applied !!!!");
+		System.out.println(" From SampleServiceAdvice :: AfterRetuning Method cashBack(...) Ended  ");
+
+	}
+
+	public Boolean transactional(ProceedingJoinPoint joinPoint) throws Throwable {
+		System.out.println(
+				"\n\n From SampleServiceAdvice :: AroundAdvice method transactional() => Transaction Initiated  ");
+
+		Boolean flag = (Boolean) joinPoint.proceed();
+
+		if (flag) {
+			System.out.println(
+					"\n\n From SampleServiceAdvice :: AroundAdvice method transactional() => Transaction Successfull  ");
+		} else {
+			System.out.println(
+					"\n\n From SampleServiceAdvice :: AroundAdvice method transactional() => Transaction Rollbacked  ");
+		}
+
+		return flag;
+	}
+
+	public void handleException(Throwable exp) {
+		System.out.println(
+				"\n\n From SampleServiceAdvice :: After-Throwing Advice  method handleException(...) => Exception Handled  ");
+		System.out.println(exp);
+	}
+
+	public void finalMethod() {
+		System.out.println(
+				"\n\n From SampleServiceAdvice :: Finally Advice  method finalMethod(...) => execution Completed");
+	}
+
+}

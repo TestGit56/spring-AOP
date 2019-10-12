@@ -1,0 +1,16 @@
+Working with AspectJAnnotations:
+*******************************
+
+@Aspect => Make your advice class as Aspect
+
+@Before(value = "execution(* com.datageeks.service.SampleService.demo(..))")
+
+@AfterReturning(returning = "orderAmount",pointcut = "execution(* com.datageeks.service.SampleService.order())")
+
+@Around(value = "execution(* com.datageeks.service.SampleService.transfer())")
+
+@AfterThrowing(throwing = "exp",pointcut = "execution(* com.datageeks.service.SampleService.testExp())")
+
+@After(value = "execution(* com.datageeks.service.SampleService.testExp())")
+
+
